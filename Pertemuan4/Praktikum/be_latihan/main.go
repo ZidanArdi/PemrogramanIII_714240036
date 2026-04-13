@@ -8,16 +8,26 @@ import (
 	"be_latihan/config"
 	"be_latihan/model"
 	"be_latihan/repository"
+	"be_latihan/router"
 
 	"github.com/gofiber/fiber/v2"
+	//"gorm.io/gorm/logger"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	//"be_latihan/routes"
 )
 
 func main() {
 	app := fiber.New()
+	app.Use(logger.New())
 
 	config.InitDB()
 	config.GetDB().AutoMigrate(&model.Mahasiswa{})
+	router .SetupRouter(app)
+
+	app.Listen(":3000")
+
+
+
 
 	app.Get("/mahasiswa", func(c *fiber.Ctx) error {
 		data, err := repository.GetAllMahasiswa()
