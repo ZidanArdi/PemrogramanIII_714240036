@@ -13,12 +13,18 @@ import (
 	"github.com/gofiber/fiber/v2"
 	//"gorm.io/gorm/logger"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"strings"
 	//"be_latihan/routes"
 )
 
 func main() {
 	app := fiber.New()
 	app.Use(logger.New())
+	app.Use(cors.New(cors.Config{
+	AllowOrigins:     strings.Join(config.GetAllowedOrigins(), ","),
+	AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS",
+}))
 
 	config.InitDB()
 	config.GetDB().AutoMigrate(&model.Mahasiswa{})
@@ -26,7 +32,7 @@ func main() {
 
 	app.Listen(":3000")
 
-
+	
 
 
 	app.Get("/mahasiswa", func(c *fiber.Ctx) error {

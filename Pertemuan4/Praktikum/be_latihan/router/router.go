@@ -17,4 +17,7 @@ func SetupRouter(app *fiber.App) {
 
 	//jika ingin menggunakan query parameter
 	mahasiswa.Get("/search", handler.GetMahasiswaByNPM)
+	mahasiswa.Post("/", handler.InsertMahasiswa)
+	mahasiswa.Put("/:npm", handler.UpdateMahasiswa)
+	mahasiswa.Delete("/:npm", handler.DeleteMahasiswa)
 }
