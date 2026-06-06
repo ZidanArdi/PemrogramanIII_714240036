@@ -24,15 +24,15 @@ func GetAllMahasiswa(c *fiber.Ctx) error {
 }           
 
 func GetMahasiswaByNPM(c *fiber.Ctx) error {
-	npmQuery := c.Query("npm")
-	if npmQuery == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(model.Response{
-			Message: "NPM harus disertakan sebagai query parameter",
-		})
-	}
-	npm, err := strconv.ParseInt(npmQuery, 10, 64)
+	// npmQuery := c.Query("npm")
+	// if npmQuery == "" {
+	// 	return c.Status(fiber.StatusBadRequest).JSON(model.Response{
+	// 		Message: "NPM harus disertakan sebagai query parameter",
+	// 	})
+	// }
+	// npm, err := strconv.ParseInt(npmQuery, 10, 64)
 
-	//npm, err := strconv.ParseInt(c.Params("npm"), 10, 64)
+	npm, err := strconv.ParseInt(c.Params("npm"), 10, 64)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(model.Response{
 			Message: "NPM tidak valid",
