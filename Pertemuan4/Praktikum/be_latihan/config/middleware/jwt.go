@@ -46,6 +46,7 @@ func JWTProtected(requiredRole string) fiber.Handler {
 		if authHeader == "" {
 			return c.Status(fiber.StatusUnauthorized).JSON(model.Response{
 				Message: "authorization header wajib diisi",
+				Error:   "unauthorized",
 			})
 		}
 
@@ -53,6 +54,7 @@ func JWTProtected(requiredRole string) fiber.Handler {
 		if tokenString == authHeader {
 			return c.Status(fiber.StatusUnauthorized).JSON(model.Response{
 				Message: "format token harus Bearer <token>",
+				Error:   "unauthorized",
 			})
 		}
 
@@ -62,6 +64,7 @@ func JWTProtected(requiredRole string) fiber.Handler {
 		if err != nil || !token.Valid {
 			return c.Status(fiber.StatusUnauthorized).JSON(model.Response{
 				Message: "token tidak valid atau sudah expired",
+				Error:   "unauthorized",
 			})
 		}
 
@@ -69,12 +72,14 @@ func JWTProtected(requiredRole string) fiber.Handler {
 		if !ok {
 			return c.Status(fiber.StatusUnauthorized).JSON(model.Response{
 				Message: "claims token tidak valid",
+				Error:   "unauthorized",
 			})
 		}
 
 		if requiredRole != "" && claims.Role != requiredRole {
 			return c.Status(fiber.StatusForbidden).JSON(model.Response{
 				Message: "user tidak memiliki akses untuk fitur ini",
+				Error:   "forbidden",
 			})
 		}
 

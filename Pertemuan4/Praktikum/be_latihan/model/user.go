@@ -10,18 +10,23 @@ type User struct {
 func (User) TableName() string { return "users" }
 
 type AuthRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Role     string `json:"role"`
+	Username string `json:"username" example:"admin"`
+	Password string `json:"password" example:"admin123"`
+	Role     string `json:"role" example:"admin"`
+}
+
+type ChangePasswordRequest struct {
+	OldPassword string `json:"old_password" example:"admin123"`
+	NewPassword string `json:"new_password" example:"admin456"`
 }
 
 type AuthUserResponse struct {
-	ID       string `json:"id"`
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	ID       string `json:"id" example:"2f5d7e2a-1234-4567-8901-abcdefabcdef"`
+	Username string `json:"username" example:"admin"`
+	Role     string `json:"role" example:"admin"`
 }
 
 type LoginResponse struct {
-	Token string           `json:"token"`
+	Token string           `json:"token" example:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx"`
 	User  AuthUserResponse `json:"user"`
 }
